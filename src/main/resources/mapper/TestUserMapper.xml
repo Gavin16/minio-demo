@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dal.TestUserMapper">
+  <resultMap id="BaseResultMap" type="com.demo.entities.TestUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, age, address, `position`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from test_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from test_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.demo.entities.TestUser" useGeneratedKeys="true">
+    insert into test_user (username, age, address, 
+      `position`)
+    values (#{username,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.demo.entities.TestUser" useGeneratedKeys="true">
+    insert into test_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="position != null">
+        `position`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entities.TestUser">
+    update test_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        `position` = #{position,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.entities.TestUser">
+    update test_user
+    set username = #{username,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      `position` = #{position,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
