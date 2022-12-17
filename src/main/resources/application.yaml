@@ -16,6 +16,13 @@ spring:
     url: jdbc:mysql://localhost:30306/test?useUnicode=true&characterEncoding=utf-8&useTimezone=true&serverTimezone=GMT%2B8&useSSL=false
     hikari:
       connection-test-query: select 1
+      minimum-idle: 2 # 最小空闲连接数
+      maximum-pool-size: 10 # 连接池最大连接数
+      idle-timeout: 10000   # 空闲连接超时时长(ms)，超过此时长后空闲连接将释放
+      max-lifetime: 60000   # 连接存活的最大时间, 超过存活时间后将再次创建(mininum-idle)个新的空闲连接
+
+#      validation-timeout: 3000
+
 
 # mybatis 配置
 mybatis-plus:
